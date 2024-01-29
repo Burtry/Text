@@ -56,4 +56,5 @@
     update mp.user set balance = balance - #{amount} ${ew.customSqlSegment}
     </update>
 
+
 </mapper>

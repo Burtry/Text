@@ -36,4 +36,17 @@ public class UserController {
         userService.removeById(id);
     }
 
+    @Operation(summary = "根据ids批量查询用户")
+    @GetMapping
+    public List<UserVO> queryUserByIds(@RequestParam("ids") List<Long> ids){
+        List<User> users = userService.listByIds(ids);
+        return BeanUtil.copyToList(users, UserVO.class);
+    }
+
+    @Operation(summary = "根据id扣除费用")
+    @DeleteMapping("/{id}/deduction/{money}")
+    public void deductMoneyById(@PathVariable Long id, @PathVariable Integer money) {
+        userService.deductMoney(id,money);
+    }
+
 }
