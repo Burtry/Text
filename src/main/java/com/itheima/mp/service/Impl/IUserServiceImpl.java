@@ -5,12 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itheima.mp.domain.po.User;
+import com.itheima.mp.domain.query.UserQuery;
 import com.itheima.mp.mapper.UserMapper;
 import com.itheima.mp.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class IUserServiceImpl extends ServiceImpl<UserMapper,User> implements IUserService {
@@ -35,5 +37,23 @@ public class IUserServiceImpl extends ServiceImpl<UserMapper,User> implements IU
 
         //简单的查询修改可以不用wrapper.
         baseMapper.deductMoney(id,money);
+    }
+
+    @Override
+    public List<User> queryUsers(UserQuery query) {
+        /*QueryWrapper<User> wrapper = new QueryWrapper<User>()
+                .like(query.getName() != null,"username",query.getName())
+                .like(query.getStatus() != null, "status",query.getStatus())
+                .ge(query.getMinBalance() != null, "balance", query.getMinBalance())
+                .le(query.getMaxBalance() != null, "balance", query.getMaxBalance());
+
+        return list(wrapper);*/
+
+         return lambdaQuery().like(query.getName() != null,User::getUsername,query.getName())
+                .like(query.getStatus() != null, User::getStatus,query.getStatus())
+                .ge(query.getMinBalance() != null, User::getBalance, query.getMinBalance())
+                .le(query.getMaxBalance() != null, User::getBalance, query.getMaxBalance()).list();
+
+
     }
 }
