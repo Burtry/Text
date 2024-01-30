@@ -3,6 +3,7 @@ package com.itheima.mp.domain.po;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class User {
@@ -51,4 +52,6 @@ public class User {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+
 }

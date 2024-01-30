@@ -40,11 +40,11 @@ public class UserController {
     @Operation(summary = "根据ids批量查询用户")
     @GetMapping
     public List<UserVO> queryUserByIds(@RequestParam("ids") List<Long> ids){
-        List<User> users = userService.listByIds(ids);
-        return BeanUtil.copyToList(users, UserVO.class);
+        return userService.queryUserAndAddressByIds(ids);
     }
 
     @Operation(summary = "根据id扣除费用")
+
     @DeleteMapping("/{id}/deduction/{money}")
     public void deductMoneyById(@PathVariable Long id, @PathVariable Integer money) {
         userService.deductMoney(id,money);
@@ -55,6 +55,12 @@ public class UserController {
     public List<UserVO> queryUsers(UserQuery query){
         List<User> users = userService.queryUsers(query);
         return BeanUtil.copyToList(users, UserVO.class);
+    }
+
+    @Operation(summary = "根据id查询用户")
+    @GetMapping("/select")
+    public UserVO queryUserAndAddressById(@RequestParam("id") Long id){
+        return userService.queryUserAndAddressById(id);
     }
 
 }
