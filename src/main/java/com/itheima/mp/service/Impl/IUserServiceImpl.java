@@ -85,6 +85,7 @@ public class IUserServiceImpl extends ServiceImpl<UserMapper,User> implements IU
             return Collections.emptyList();
         }
 
+
         //2.查询地址
         List<Long> userIds = users.stream().map(User::getId).collect(Collectors.toList());
         List<Address> addressList = Db.lambdaQuery(Address.class).in(Address::getUserId, userIds).list();
