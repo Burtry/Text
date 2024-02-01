@@ -1,11 +1,15 @@
 package com.itheima.mp.domain.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@TableName(value = "user", autoResultMap = true)
 public class User {
 
     /**
@@ -28,10 +32,11 @@ public class User {
      */
     private String phone;
 
+    @TableField(typeHandler = JacksonTypeHandler.class)
     /**
      * 详细信息
      */
-    private String info;
+    private UserInfo info;
 
     /**
      * 使用状态（1正常 2冻结）
