@@ -1,32 +1,31 @@
 package com.itheima.mp.domain.vo;
 
-import com.itheima.mp.domain.po.Address;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-@ApiModel(description = "用户VO实体")
+@Schema(name = "用户VO")
 public class UserVO {
 
-    @ApiModelProperty("用户id")
+    @Schema(description = "用户id", type = "long")
     private Long id;
 
-    @ApiModelProperty("用户名")
+    @Schema(description = "用户名")
     private String username;
 
-    @ApiModelProperty("详细信息")
+    @Schema(description = "用户信息", type = "String",hidden = true)
     private String info;
 
-    @ApiModelProperty("使用状态（1正常 2冻结）")
+    @Schema(description = "用户状态", type = "inta")
     private Integer status;
 
-    @ApiModelProperty("账户余额")
+    @Schema(description = "余额", type = "Integer")
     private Integer balance;
 
+    @Schema(description = "用户地址", type = "List")
     //用户地址
-    @ApiModelProperty("用户地址")
     private List<AddressVO> addresses;
 }

@@ -1,4 +1,4 @@
-package com.itheima.mp.controller;
+package com.itheima.mp.controller.admin;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.itheima.mp.domain.dto.UserFormDTO;
@@ -7,6 +7,8 @@ import com.itheima.mp.domain.query.UserQuery;
 import com.itheima.mp.domain.vo.UserVO;
 import com.itheima.mp.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
@@ -14,16 +16,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor //TODO 待向笔记中写入此用法
 @RestController
 @RequestMapping("/users")
-@Tag(name = "用户管理端")
+@Tag(name = "用户Controller")
 public class UserController {
 
     private final IUserService userService;
 
-    @Operation(summary = "新增用户")
+
+
     @PostMapping
+    @Operation(summary = "新增用户")
     public void saveUser(@RequestBody UserFormDTO userFormDTO){
         // 1.转换DTO为PO
         User user = BeanUtil.copyProperties(userFormDTO, User.class);
@@ -31,33 +35,31 @@ public class UserController {
         userService.save(user);
     }
 
-    @Operation(summary = "删除用户")
+
+
+
+
+
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.removeById(id);
     }
 
-    @Operation(summary = "根据ids批量查询用户")
     @GetMapping
     public List<UserVO> queryUserByIds(@RequestParam("ids") List<Long> ids){
         return userService.queryUserAndAddressByIds(ids);
     }
-
-    @Operation(summary = "根据id扣除费用")
 
     @DeleteMapping("/{id}/deduction/{money}")
     public void deductMoneyById(@PathVariable Long id, @PathVariable Integer money) {
         userService.deductMoney(id,money);
     }
 
-    @Operation(summary = "根据复杂条件批量查询用户")
     @GetMapping("/list")
     public List<UserVO> queryUsers(UserQuery query){
         List<User> users = userService.queryUsers(query);
         return BeanUtil.copyToList(users, UserVO.class);
     }
-
-    @Operation(summary = "根据id查询用户")
     @GetMapping("/select")
     public UserVO queryUserAndAddressById(@RequestParam("id") Long id){
         return userService.queryUserAndAddressById(id);

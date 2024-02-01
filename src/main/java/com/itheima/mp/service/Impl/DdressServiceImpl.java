@@ -1,8 +1,8 @@
 package com.itheima.mp.service.impl;
 
-import com.itheima.mp.domain.Address;
-import com.itheima.mp.mapper.AddressMapper;
-import com.itheima.mp.service.IAddressService;
+import com.itheima.mp.domain.Ddress;
+import com.itheima.mp.mapper.DdressMapper;
+import com.itheima.mp.service.IDdressService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2024-01-31
  */
 @Service
-public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> implements IAddressService {
+public class DdressServiceImpl extends ServiceImpl<DdressMapper, Ddress> implements IDdressService {
 
 }

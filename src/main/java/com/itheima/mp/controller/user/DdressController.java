@@ -1,4 +1,4 @@
-package com.itheima.mp.controller;
+package com.itheima.mp.controller.user;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author Burtry
- * @since 2024-01-30
+ * @since 2024-01-31
  */
 @RestController
-@RequestMapping("/address")
-public class AddressController {
+@RequestMapping("/ddress")
+public class DdressController {
 
 }

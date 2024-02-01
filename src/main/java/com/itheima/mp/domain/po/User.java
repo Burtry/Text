@@ -1,13 +1,17 @@
 package com.itheima.mp.domain.po;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Tag(name = "用户", description = "用户实体类")
 public class User {
 
+    @Schema(name = "用户id", type = "Long")
     /**
      * 用户id
      */
