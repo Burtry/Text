@@ -36,6 +36,7 @@ public class IUserServiceImpl extends ServiceImpl<UserMapper,User> implements IU
         }
 
 
+
 /*        UpdateWrapper<User> wrapper = new UpdateWrapper<User>()
                 .setSql("balance = balance - " + money) // SET balance = balance - 200
                 .in("id", id); // WHERE id in (1, 2, 4)
@@ -76,6 +77,10 @@ public class IUserServiceImpl extends ServiceImpl<UserMapper,User> implements IU
         return userVO;
     }
 
+
+    /**
+     * 根据ids查询用户和用户所对应的地址 的做法
+     */
     @Override
     public List<UserVO> queryUserAndAddressByIds(List<Long> ids) {
 

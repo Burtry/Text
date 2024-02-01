@@ -1,6 +1,6 @@
 package com.itheima.mp.service;
 
-import com.itheima.mp.domain.Address;
+import com.itheima.mp.domain.Ddress;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Burtry
  * @since 2024-01-31
  */
-public interface IAddressService extends IService<Address> {
+public interface IDdressService extends IService<Ddress> {
 
 }

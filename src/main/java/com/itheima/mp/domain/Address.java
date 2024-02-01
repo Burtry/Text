@@ -1,9 +1,10 @@
-package com.itheima.mp.domain.po;
+package com.itheima.mp.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,12 +15,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Burtry
- * @since 2024-01-30
+ * @since 2024-01-31
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName(value = "address", autoResultMap = true)
+@TableName("address")
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,7 +42,7 @@ public class Address implements Serializable {
 
     //@ApiModelProperty(value = "手机")
     private String mobile;
-    //
+
     //@ApiModelProperty(value = "详细地址")
     private String street;
 
