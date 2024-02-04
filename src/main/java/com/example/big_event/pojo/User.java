@@ -1,9 +1,9 @@
 package com.example.big_event.pojo;
-
-
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
 public class User {
     private Integer id;//主键ID
     private String username;//用户名
