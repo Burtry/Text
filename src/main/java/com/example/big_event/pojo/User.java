@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -36,12 +38,14 @@ public class User implements Serializable {
      * 用户名
      */
     @TableField("username")
+    @Parameter(description = "用户名")
     private String username;
 
     /**
      * 密码
      */
     @TableField("password")
+    @Parameter(description = "密码")
     private String password;
 
     /**

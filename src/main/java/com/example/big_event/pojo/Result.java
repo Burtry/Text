@@ -3,6 +3,8 @@ package com.example.big_event.pojo;
 
 //统一响应结果
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class Result<T> {
+    @Schema(description = "状态码")
     private Integer code;//业务状态码  0-成功  1-失败
     private String message;//提示信息
     private T data;//响应数据
