@@ -1,4 +1,4 @@
-package com.example.big_event.pojo;
+package com.example.big_event;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
