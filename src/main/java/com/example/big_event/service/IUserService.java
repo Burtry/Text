@@ -1,7 +1,7 @@
 package com.example.big_event.service;
 
-import com.example.big_event.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.big_event.pojo.User;
 
 /**
  * <p>
@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
 
+    /**
+     * 注册
+     * @param username
+     * @param password
+     */
+    void register(String username, String password);
 }

@@ -1,7 +1,8 @@
 package com.example.big_event.mapper;
 
-import com.example.big_event.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.big_event.pojo.User;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -15,4 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
+    @Insert("")
+    void add(User newUser);
 }
