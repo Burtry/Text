@@ -8,6 +8,7 @@ import com.example.big_event.pojo.User;
 import com.example.big_event.service.IUserService;
 import com.example.big_event.utils.JwtUtil;
 import com.example.big_event.utils.Md5Util;
+import com.example.big_event.utils.ThreadLocalUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,7 +40,7 @@ public class UserController {
 
     @PostMapping("/register")
     @Operation(summary = "注册")
-    public Result register(@Pattern(regexp = "^\\d{5,16}$") @Parameter(description = "用户名") String username,@Pattern(regexp = "^\\d{5,16}$") @Parameter(description = "密码") String password) {
+    public Result register(@Pattern(regexp = "^[a-zA-Z0-9]{5,16}$") @Parameter(description = "用户名") String username,@Pattern(regexp = "^[a-zA-Z0-9]{5,16}$") @Parameter(description = "密码") String password) {
 
         User user = userService.lambdaQuery().eq(User::getUsername, username).one();
         //System.out.println(user);
@@ -53,7 +54,7 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public Result login(@Pattern(regexp = "^\\d{5,16}") String username, @Pattern(regexp = "^\\d{5,16}") String password) {
+    public Result login(@Pattern(regexp = "^[a-zA-Z0-9]{5,16}$") String username, @Pattern(regexp = "^[a-zA-Z0-9]{5,16}$") String password) {
         User loginUser = userService.lambdaQuery().eq(User::getUsername, username).one();
         //判断用户
         if (loginUser == null) {
@@ -73,6 +74,27 @@ public class UserController {
         return Result.success(token);
 
     }
+
+/*    @GetMapping("/userInfo")
+    public Result<User> getUserInfo(@RequestHeader(name = "token") String token) {
+        Map<String, Object> claims = JwtUtil.parseToken(token);
+        Integer userId = (Integer) claims.get("id");
+        User user = userService.getById(userId);
+        return Result.success(user);
+    }*/
+
+    //在ThreadLocal获取用户信息
+    
+    @GetMapping("/userInfo")
+    public Result<User> getUserInfo() {
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
+        User user = userService.getById(id);
+        return Result.success(user);
+    }
+
+
+
 
     @GetMapping("/{id}")
     public Result<User> getById(@PathVariable Long id) {
