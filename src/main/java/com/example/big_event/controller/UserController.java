@@ -14,10 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -75,5 +72,11 @@ public class UserController {
 
         return Result.success(token);
 
+    }
+
+    @GetMapping("/{id}")
+    public Result<User> getById(@PathVariable Long id) {
+        User user = userService.getById(id);
+        return Result.success(user);
     }
 }
