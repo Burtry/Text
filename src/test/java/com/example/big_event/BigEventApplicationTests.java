@@ -9,5 +9,4 @@ class BigEventApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
