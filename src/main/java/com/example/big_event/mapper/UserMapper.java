@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.big_event.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * <p>
@@ -18,4 +19,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Insert("")
     void add(User newUser);
+
 }

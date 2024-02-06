@@ -9,6 +9,9 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -33,6 +36,7 @@ public class User implements Serializable {
      * ID
      */
     @TableId(value = "id", type = IdType.AUTO)
+    @NotNull
     private Integer id;
 
     /**
@@ -54,12 +58,16 @@ public class User implements Serializable {
      * 昵称
      */
     @TableField("nickname")
+    @Pattern(regexp = "^[a-zA-Z0-9]{5,16}$")
+    @NotNull
     private String nickname;
 
     /**
      * 邮箱
      */
     @TableField("email")
+    @NotNull
+    @Email
     private String email;
 
     /**

@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -100,5 +101,20 @@ public class UserController {
     public Result<User> getById(@PathVariable Long id) {
         User user = userService.getById(id);
         return Result.success(user);
+    }
+
+
+    @PostMapping("/update")
+    public Result updateUser(@RequestBody @Validated User user) {
+        userService.updateUser(user);
+        return Result.success();
+    }
+
+    @PostMapping("/updateavatarUrl")
+    public Result updateAvatarUrl(@RequestParam @URL String avatarUrl) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
+        userService.updateurl(avatarUrl,id);
+        return Result.success();
     }
 }

@@ -19,4 +19,9 @@ public interface IUserService extends IService<User> {
      * @param password
      */
     void register(String username, String password);
+
+    void updateUser(User user);
+
+
+    void updateurl(String avatarUrl, Integer id);
 }

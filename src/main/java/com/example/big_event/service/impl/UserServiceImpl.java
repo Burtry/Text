@@ -41,4 +41,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         save(newUser);
         //userMapper.add(newUser);
     }
+
+    //不更新用户名
+    @Override
+    public void updateUser(User user) {
+        lambdaUpdate().set(User::getNickname,user.getNickname())
+                .set(User::getUserPic,user.getUserPic())
+                .set(User::getEmail,user.getEmail())
+                .eq(User::getId,user.getId()).update();
+    }
+
+    @Override
+    public void updateurl(String avatarUrl, Integer id) {
+
+        lambdaUpdate().set(User::getUserPic,avatarUrl).eq(User::getId,id).update();
+
+
+    }
+
+
 }
