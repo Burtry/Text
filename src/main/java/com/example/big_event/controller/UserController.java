@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -115,6 +116,34 @@ public class UserController {
         Map<String, Object> map = ThreadLocalUtil.get();
         Integer id = (Integer) map.get("id");
         userService.updateurl(avatarUrl,id);
+        return Result.success();
+    }
+
+    @PostMapping("/updatePwd")
+    public Result updatePwd(@RequestBody Map<String, String> params) {
+        String oldPwd = params.get("old_pwd");
+        String newPwd = params.get("new_pwd");
+        String rePwd = params.get("re_pwd");
+        if (!StringUtils.hasLength(oldPwd) || !StringUtils.hasLength(newPwd) || !StringUtils.hasLength(rePwd)) {
+            return Result.error("缺少参数");
+        }
+
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
+        User user = userService.getById(id);
+
+
+        if (!user.getPassword().equals(Md5Util.getMD5String(oldPwd))) {
+            return Result.error("旧密码错误!");
+        }
+
+        if (!newPwd.equals(rePwd)) {
+            return Result.error("两次密码不一致!");
+
+        }
+
+        String md5NewPwd = Md5Util.getMD5String(newPwd);
+        userService.lambdaUpdate().set(User::getPassword,md5NewPwd).eq(User::getId,user.getId()).update();
         return Result.success();
     }
 }
