@@ -111,7 +111,7 @@ public class UserController {
         return Result.success();
     }
 
-    @PostMapping("/updateavatarUrl")
+    @PostMapping("/updateAvatarUrl")
     public Result updateAvatarUrl(@RequestParam @URL String avatarUrl) {
         Map<String, Object> map = ThreadLocalUtil.get();
         Integer id = (Integer) map.get("id");
