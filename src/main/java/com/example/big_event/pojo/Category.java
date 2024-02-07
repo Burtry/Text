@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.groups.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -32,12 +33,12 @@ public class Category implements Serializable {
      * ID
      */
     @TableId(value = "id", type = IdType.AUTO)
+    @NotNull(groups = {Update.class})   //更新的时候需要id
     private Integer id;
-
     /**
      * 分类名称
      */
-   @NotNull
+   @NotNull                             //其他添加相关注解的分成默认组
     private String categoryName;
     /**
      * 分类别名
@@ -59,6 +60,12 @@ public class Category implements Serializable {
      * 修改时间
      */
     private LocalDateTime updateTime;
+
+    public interface Add extends Default {
+    }
+
+    public interface Update extends Default{
+    }
 
 
 }

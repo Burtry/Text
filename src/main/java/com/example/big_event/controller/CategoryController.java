@@ -36,7 +36,7 @@ public class CategoryController {
 
     @Operation(summary = "新增文章")
     @PostMapping()
-    public Result add(@RequestBody @Validated Category category) {
+    public Result add(@RequestBody @Validated({Category.Add.class}) Category category) {
         categoryService.add(category);
         return Result.success();
     }
@@ -61,6 +61,17 @@ public class CategoryController {
     public Result<PageDTO<Category>> page(PageQuery pageQuery) {
         PageDTO<Category> categoryPageDTO = categoryService.queryPage(pageQuery);
         return Result.success(categoryPageDTO);
+    }
+
+    @GetMapping("/detail")
+    public Result<Category> getById(Integer id) {
+        return Result.success(categoryService.getById(id));
+    }
+
+    @PutMapping()
+    public Result update(@RequestBody @Validated(Category.Update.class) Category category) {
+        categoryService.saveOrUpdate(category);
+        return Result.success();
     }
 
 }
