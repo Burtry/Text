@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -34,16 +37,17 @@ public class Category implements Serializable {
     /**
      * 分类名称
      */
+   @NotNull
     private String categoryName;
-
     /**
      * 分类别名
      */
+    @NotNull
     private String categoryAlias;
-
     /**
      * 创建人ID
      */
+    @JsonIgnore
     private Integer createUser;
 
     /**

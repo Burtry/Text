@@ -2,15 +2,18 @@ package com.example.big_event.controller;
 
 
 import com.example.big_event.pojo.Category;
+import com.example.big_event.pojo.PageBean;
 import com.example.big_event.pojo.Result;
 import com.example.big_event.service.ICategoryService;
+import com.example.big_event.utils.ThreadLocalUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -28,10 +31,23 @@ public class CategoryController {
 
     private final ICategoryService categoryService;
 
-    @PostMapping("/add")
-    public Result add(@RequestBody Category category) {
+    @Operation(summary = "新增文章")
+    @PostMapping()
+    public Result add(@RequestBody @Validated Category category) {
         categoryService.add(category);
         return Result.success();
+    }
+
+    /**
+     * 查询当前用户的所有文章
+     * @return
+     */
+    @GetMapping()
+    public Result<List<Category>> list() {
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
+        List<Category> list = categoryService.lambdaQuery().eq(Category::getCreateUser,id).list();
+        return Result.success(list);
     }
 
 }
