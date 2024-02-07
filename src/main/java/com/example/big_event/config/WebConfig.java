@@ -18,6 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/user/**")        //以 /user 开头的请求，防止Knife4j文档访问不了
+                .addPathPatterns("/category/**")
                 .excludePathPatterns("/user/login/**")
                 .excludePathPatterns("/user/register/**");
     }
