@@ -47,7 +47,7 @@ public class Category implements Serializable {
     /**
      * 创建人ID
      */
-    @JsonIgnore
+    //@JsonIgnore
     private Integer createUser;
 
     /**

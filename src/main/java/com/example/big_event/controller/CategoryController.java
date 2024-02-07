@@ -1,9 +1,12 @@
 package com.example.big_event.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.big_event.pojo.Category;
 import com.example.big_event.pojo.PageBean;
+import com.example.big_event.pojo.PageQuery;
 import com.example.big_event.pojo.Result;
+import com.example.big_event.pojo.dto.PageDTO;
 import com.example.big_event.service.ICategoryService;
 import com.example.big_event.utils.ThreadLocalUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,6 +51,16 @@ public class CategoryController {
         Integer id = (Integer) map.get("id");
         List<Category> list = categoryService.lambdaQuery().eq(Category::getCreateUser,id).list();
         return Result.success(list);
+    }
+
+    /***
+     * 分页查询用户文章
+     * @return
+     */
+    @GetMapping("/page")
+    public Result<PageDTO<Category>> page(PageQuery pageQuery) {
+        PageDTO<Category> categoryPageDTO = categoryService.queryPage(pageQuery);
+        return Result.success(categoryPageDTO);
     }
 
 }
