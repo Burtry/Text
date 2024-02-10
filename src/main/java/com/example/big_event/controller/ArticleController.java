@@ -4,7 +4,9 @@ package com.example.big_event.controller;
 import com.example.big_event.pojo.Article;
 import com.example.big_event.pojo.Result;
 import com.example.big_event.service.IArticleService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,7 @@ public class ArticleController {
     private final IArticleService articleService;
 
     @PostMapping("/add")
-    public Result add(@RequestBody Article article) {
+    public Result add(@RequestBody @Validated Article article) {
         articleService.add(article);
         return Result.success();
     }

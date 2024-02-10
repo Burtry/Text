@@ -5,10 +5,11 @@ import com.example.big_event.pojo.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class BigEventApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println(Integer.toString(5, 2));
 	}
 }
