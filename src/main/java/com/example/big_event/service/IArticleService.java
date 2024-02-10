@@ -2,6 +2,8 @@ package com.example.big_event.service;
 
 import com.example.big_event.pojo.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.big_event.pojo.PageQuery;
+import com.example.big_event.pojo.dto.PageDTO;
 
 /**
  * <p>
@@ -14,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IArticleService extends IService<Article> {
 
     void add(Article article);
+
+    PageDTO<Article> pageQuery(PageQuery pageQuery);
 }
