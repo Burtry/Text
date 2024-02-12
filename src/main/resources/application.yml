@@ -9,6 +9,7 @@ spring:
       idle-event-interval:
       idle-partition-event-interval:
 
+
 logging:
   level:
     com.example: debug

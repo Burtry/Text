@@ -13,8 +13,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -39,6 +43,8 @@ import java.util.Map;
 public class UserController {
 
     private final IUserService userService;
+
+    private final StringRedisTemplate redisTemplate;
 
     @PostMapping("/register")
     @Operation(summary = "注册")
@@ -72,6 +78,11 @@ public class UserController {
         claims.put("username", loginUser.getUsername());
         claims.put("id", loginUser.getId());
         String token = JwtUtil.genToken(claims);
+
+        //将token存储到redis中
+        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+        operations.set(loginUser.getUsername(), token,1, TimeUnit.HOURS);
+
 
         return Result.success(token);
 
@@ -120,10 +131,7 @@ public class UserController {
     }
 
     @PostMapping("/updatePwd")
-    public Result updatePwd(@RequestBody Map<String, String> params) {
-        String oldPwd = params.get("old_pwd");
-        String newPwd = params.get("new_pwd");
-        String rePwd = params.get("re_pwd");
+    public Result updatePwd(String oldPwd, String newPwd, String rePwd) {
         if (!StringUtils.hasLength(oldPwd) || !StringUtils.hasLength(newPwd) || !StringUtils.hasLength(rePwd)) {
             return Result.error("缺少参数");
         }
@@ -144,6 +152,11 @@ public class UserController {
 
         String md5NewPwd = Md5Util.getMD5String(newPwd);
         userService.lambdaUpdate().set(User::getPassword,md5NewPwd).eq(User::getId,user.getId()).update();
+
+        //删除redis中对应的token
+        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+        String username = (String) map.get("username");
+        operations.getOperations().delete(username);
         return Result.success();
     }
 }
