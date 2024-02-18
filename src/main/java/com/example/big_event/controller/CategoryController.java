@@ -29,6 +29,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/category")
 @AllArgsConstructor
+@CrossOrigin
 @Tag(name = "文章分类管理")
 public class CategoryController {
 
@@ -72,6 +73,11 @@ public class CategoryController {
     public Result update(@RequestBody @Validated(Category.Update.class) Category category) {
         categoryService.saveOrUpdate(category);
         return Result.success();
+    }
+
+    @GetMapping("/getAll")
+    public Result<List<Category>> listAll() {
+        return Result.success(categoryService.list());
     }
 
 }
