@@ -1,6 +1,6 @@
 //定制请求的实例
 import axios from 'axios';
-const baseURL = 'http://localhost:8082';
+const baseURL = '/api';
 const instance = axios.create({ baseURL });
 
 
