@@ -24,7 +24,7 @@
           </el-button>
         </el-form-item>
         <el-form-item class="flex">
-          <el-link type="info" :underline="false" @click="isRegister = false" v-on:click="clearRegisterData">
+          <el-link type="info" :underline="false" @click="isRegister = false" v-on:click="clearData">
             ← 返回
           </el-link>
         </el-form-item>
@@ -52,7 +52,7 @@
           <el-button class="button" type="primary" auto-insert-space v-on:click="login">登录</el-button>
         </el-form-item>
         <el-form-item class="flex">
-          <el-link type="info" :underline="false" @click="isRegister = true">
+          <el-link type="info" :underline="false" @click="isRegister = true" v-on:click="clearData">
             注册 →
           </el-link>
         </el-form-item>
@@ -64,6 +64,7 @@
 <script setup>
 import { User, Lock } from "@element-plus/icons-vue";
 import { ref } from "vue";
+import { ElMessage } from "element-plus";
 //控制注册与登录表单的显示， 默认显示注册
 const isRegister = ref(false);
 
@@ -74,8 +75,8 @@ const registerData = ref({
   rePassword: "",
 });
 
-//清空数据模型的数据
-const clearRegisterData = () => {
+//清除数据模型中的数据
+const clearData = () => {
   registerData.value = {
     username: "",
     password: "",
@@ -85,24 +86,36 @@ const clearRegisterData = () => {
 
 //调用后台接口，完成注册
 import { userRegisterService, userLoginService } from '../api/user.js'
+
+//注册函数
 const register = async () => {
-  let result = await userRegisterService(registerData.value)
-  if (result.code === 0) {
-    alert(result.msg ? msg : "注册成功！")
-  } else {
-    alert("注册失败！")
+  if (registerData.value.password !== registerData.value.rePassword) {
+    ElMessage.error("两次输入的密码不一致！")
+    return
   }
-}
-//登录
-const login = async () => {
-  let result = await userLoginService(registerData.value)
-  if (result.code === 0) {
-    alert(result.msg ? msg : "登录成功！")
+  let result = await userRegisterService(registerData.value)
+  if (result.code !== 0) {
+    ElMessage.error(result.message ? result.message : "注册失败！")
   } else {
-    alert("登录失败！")
+    ElMessage.success(result.message ? result.message : "注册成功！")
+    //注册成功后，清除数据模型中的数据
+    clearData()
+    //注册成功后，显示登录表单
+    isRegister.value = false;
   }
 
 }
+//登录函数
+const login = async () => {
+  let result = await userLoginService(registerData.value)
+  if (result.code !== 0) {
+    ElMessage.error(result.message ? result.message : "登录失败！")
+  } else {
+    ElMessage.success(result.message ? result.message : "登录成功！")
+  }
+
+}
+
 
 //自定义校验函数校验函数
 const checkRePassword = (rule, value, callback) => {

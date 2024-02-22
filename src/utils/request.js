@@ -10,7 +10,7 @@ instance.interceptors.response.use(
         return res.data;
     },
     err => {
-        console.log("服务异常");
+        console.log("服务异常!");
         return Promise.reject(err); //将异步状态转换成失败的状态。
     }
 )
