@@ -1,8 +1,8 @@
 import request from '../utils/request'
 
 //提供调用接口的函数
-
-const userRegisterService = (registerData) => {
+//注册
+export const userRegisterService = (registerData) => {
     //借助UrlSearchParams来完成传递
     const params = new URLSearchParams()
     for (const key in registerData) {
@@ -11,8 +11,17 @@ const userRegisterService = (registerData) => {
     return request.post('/user/register', params)
 
 }
+//登录
+export const userLoginService = (loginData) => {
 
-export default userRegisterService
+    const params = new URLSearchParams()
+    for (const key in loginData) {
+        params.append(key, loginData[key])
+    }
+    return request.post('/user/login', params)
+
+}
+// export { userRegisterService, userLoginService }
 
 
 
