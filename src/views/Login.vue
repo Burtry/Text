@@ -91,29 +91,18 @@ import { userRegisterService, userLoginService } from '../api/user.js'
 const register = async () => {
   if (registerData.value.password !== registerData.value.rePassword) {
     ElMessage.error("两次输入的密码不一致！")
-    return
+    return; //一定要return ，否则会继续执行下面的代码
   }
   let result = await userRegisterService(registerData.value)
-  if (result.code !== 0) {
-    ElMessage.error(result.message ? result.message : "注册失败！")
-  } else {
-    ElMessage.success(result.message ? result.message : "注册成功！")
-    //注册成功后，清除数据模型中的数据
-    clearData()
-    //注册成功后，显示登录表单
-    isRegister.value = false;
-  }
-
+  ElMessage.success(result.message ? result.message : "注册成功！")
+  clearData()
+  //注册成功后，显示登录表单
+  isRegister.value = false;
 }
 //登录函数
 const login = async () => {
   let result = await userLoginService(registerData.value)
-  if (result.code !== 0) {
-    ElMessage.error(result.message ? result.message : "登录失败！")
-  } else {
-    ElMessage.success(result.message ? result.message : "登录成功！")
-  }
-
+  ElMessage.success(result.message ? result.message : "登录成功！")
 }
 
 
