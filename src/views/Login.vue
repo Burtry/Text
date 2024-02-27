@@ -100,9 +100,22 @@ const register = async () => {
   isRegister.value = false;
 }
 //登录函数
+
+//导入token状态
+import { useTokenStore } from '@/stores/token.js'
+
+//调用useTokenStore得到状态
+const tokenStore = useTokenStore();
+import { useRouter } from "vue-router";
+const router = useRouter();
 const login = async () => {
   let result = await userLoginService(registerData.value)
+  //保存token到状态中
+  tokenStore.setToken(result.data)
+  //登录成功后，跳转到首页
   ElMessage.success(result.message ? result.message : "登录成功！")
+  router.push("/")
+  clearData()
 }
 
 
