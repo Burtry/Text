@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { ElMessage } from "element-plus";
 import { useTokenStore } from "@/stores/token.js";
+import router from '@/router/index.js'
 const baseURL = '/api';
 const instance = axios.create({ baseURL });
 
@@ -30,8 +31,16 @@ instance.interceptors.response.use(
 
     },
     err => {
-        console.log("服务异常!");
-        return Promise.reject(err); //将异步状态转换成失败的状态。
+        if (err.response.status === 401) {
+            ElMessage.error('登录状态已过期，请重新登录');
+            const tokenStore = useTokenStore();
+            tokenStore.removeToken();
+            router.push('/login');
+        } else {
+            ElMessage.error('系统异常');
+            return Promise.reject(err);
+        }
+
     }
 )
 

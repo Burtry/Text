@@ -103,11 +103,10 @@ const register = async () => {
 
 //导入token状态
 import { useTokenStore } from '@/stores/token.js'
-
+import router from '@/router/index.js'
 //调用useTokenStore得到状态
 const tokenStore = useTokenStore();
-import { useRouter } from "vue-router";
-const router = useRouter();
+
 const login = async () => {
   let result = await userLoginService(registerData.value)
   //保存token到状态中
