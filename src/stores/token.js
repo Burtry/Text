@@ -21,8 +21,14 @@ export const useTokenStore = defineStore('token', () => {
     //3.定义移除token的方法
     const removeToken = () => {
         token.value = ''
+
     }
     return {
         token, setToken, removeToken
     }
-})
+},
+    {
+        persist: true //开启数据持久化
+    }
+
+)
