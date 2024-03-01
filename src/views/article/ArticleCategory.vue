@@ -4,8 +4,8 @@ import {
     Delete
 } from '@element-plus/icons-vue'
 import { ref } from 'vue'
-import { articleCategoryListService, articleCategoryAddService, articleCategoryUpdateService } from "@/api/article.js";
-import { ElMessage } from 'element-plus'
+import { articleCategoryListService, articleCategoryAddService, articleCategoryUpdateService, articleCategoryDeleteService } from "@/api/article.js";
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 const categorys = ref([])
 //控制添加分类弹窗
@@ -99,6 +99,36 @@ const showDialog = (row) => {
     categoryModel.value.id = row.id
 }
 
+//删除分类
+const deleteCategory = (row) => {
+    ElMessageBox.confirm(
+        '将要删除这条内容，是否继续？',
+        'Warning',
+        {
+            confirmButtonText: '继续',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(() => {
+            articleCategoryDeleteService(row.id).then(res => {
+                if (res.code === 0) {
+                    ElMessage.success('删除成功')
+                    articleList()
+                } else {
+                    ElMessage.error(res.message ? res.message : '删除失败')
+                }
+            })
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: '已取消',
+            })
+        })
+}
+
+
 </script>
 <template>
     <el-card class="page-container">
@@ -118,7 +148,7 @@ const showDialog = (row) => {
             <el-table-column label="操作" width="100">
                 <template #default="{ row }">
                     <el-button :icon="Edit" circle plain type="primary" @click=showDialog(row)></el-button>
-                    <el-button :icon="Delete" circle plain type="danger"></el-button>
+                    <el-button :icon="Delete" circle plain type="danger" @click=deleteCategory(row)></el-button>
                 </template>
             </el-table-column>
             <template #empty>
@@ -143,6 +173,8 @@ const showDialog = (row) => {
                 </span>
             </template>
         </el-dialog>
+
+
     </el-card>
 </template>
 
