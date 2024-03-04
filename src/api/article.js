@@ -20,3 +20,13 @@ export const articleCategoryUpdateService = (categoryData) => {
 export const articleCategoryDeleteService = (categoryId) => {
     return request.delete(`/category?id=` + categoryId)
 }
+
+//文章列表查询
+export const articleListService = (params => {
+    return request.get('/article/page', { params: params })
+})
+
+//添加文章
+export const articleAddService = (articleModel) => {
+    return request.post('/article', articleModel)
+}
